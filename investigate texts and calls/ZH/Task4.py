@@ -26,3 +26,30 @@ with open('calls.csv', 'r') as f:
 电话号码不能重复，每行打印一条，按字典顺序排序后输出。
 """
 
+#1、 建立拨出电话列表、接收电话列表、发短信列表、接收短信列表
+bochu_list = []
+jieshou_list = []
+faduanxin_list = []
+shouduanxin_list = []
+
+for entry in calls:
+	bochu_list.append(entry[0])
+	jieshou_list.append(entry[1])
+
+for entry in texts:
+	faduanxin_list.append(entry[0])
+	shouduanxin_list.append(entry[1])
+
+
+
+#2、 检查哪些电话只在拨出电话列表中，而不在其他列表中，生成推销列表
+
+tuixiao_list = []
+for num in bochu_list:
+	if (num not in jieshou_list) and (num not in faduanxin_list) and (num not in shouduanxin_list) and (num not in tuixiao_list):
+		tuixiao_list.append(num)
+
+tuixiao_list = sorted(tuixiao_list)
+print('These num could be telemarketers:\n')
+for haoma in tuixiao_list:
+	print(haoma + '\n')
