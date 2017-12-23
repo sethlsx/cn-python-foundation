@@ -36,8 +36,7 @@ def count_numbers(origin_list):
 #2、 调用函数计算短信和通话记录中一共有多少电话号码
 
 haomashu = 0
-haomashu += count_numbers(texts)
-haomashu += count_numbers(calls)
+haomashu += count_numbers(texts + calls)
 
 #3、 输出信息
 
