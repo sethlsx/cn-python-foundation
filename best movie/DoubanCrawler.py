@@ -8,7 +8,7 @@ return a string corresponding to the URL of douban movie lists given category an
 import urllib
 
 def getMovieUrl(category, location)
-	relative_url = '#/?sort=S&range=9,10&tags=电影, ' + category + ', ' + location
+	relative_url = '#/?sort=S&range=9,10&tags=电影,' + category + ',' + location
 	url = urllib.parse.urljoin('https://movie.douban.com/tag/', relative_url)
 	return url
 
