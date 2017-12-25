@@ -24,6 +24,18 @@ def get_html(url):
 # 任务3:定义电影类
 
 
+class Movie(object):
+	def _init_(self, name, rate, location, category, info_link, cover_link):
+		self.name = name
+		self.rate = rate
+		self.location = location
+		self.category = category
+		self.info_link = info_link
+		self.cover_link = cover_link
+		
+
+
+
 # 任务4:获得豆瓣电影的信息
 
 
