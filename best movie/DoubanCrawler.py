@@ -16,7 +16,7 @@ def getMovieUrl(category, location):
 
 # 任务2:获取电影页面html
 def get_html(url):
-	html = expanddouban.getHtml(url)
+	html = expanddouban.getHtml(url, True)
 
 
 
