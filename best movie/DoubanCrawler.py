@@ -5,15 +5,19 @@
 """
 return a string corresponding to the URL of douban movie lists given category and location.
 """
-import urllib
+import urllib.parse
+import requests
+import expanddouban
 
-def getMovieUrl(category, location)
+def getMovieUrl(category, location):
 	relative_url = '#/?sort=S&range=9,10&tags=电影,' + category + ',' + location
 	url = urllib.parse.urljoin('https://movie.douban.com/tag/', relative_url)
 	return url
 
 # 任务2:获取电影页面html
-def 
+def get_html(url):
+	html = expanddouban.getHtml(url)
+
 
 
 
