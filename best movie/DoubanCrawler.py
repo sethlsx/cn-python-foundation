@@ -9,6 +9,7 @@ import urllib.parse
 import requests
 import expanddouban
 from bs4 import BeautifulSoup
+import csv
 
 def getMovieUrl(category, location):
 	relative_url = '#/?sort=S&range=9,10&tags=电影,' + category + ',' + location
@@ -51,6 +52,8 @@ def getMovies(category, location):
 		movie = Movie()
 		movie.name = item.find(class_ = 'title').get_text()
 		movie.rate = item.find(class_ = 'rate').get_text()
+		movie.location = location
+		movie.category = category
 		movie.info_link = item.get('href')
 		movie.cover_link = item.find('img').get('src')
 		movies.append(movie)
@@ -61,6 +64,24 @@ def getMovies(category, location):
 
 
 # 任务5:构造电影信息数据表
+
+types = ['喜剧', '科幻', '动作']
+regions = ['大陆', '美国', '香港', '台湾', '日本', '韩国', '英国', '法国', '德国', '意大利', 
+'西班牙', '印度', '泰国', '俄罗斯', '伊朗', '加拿大', '澳大利亚', '爱尔兰', '瑞典', '巴西', '丹麦']
+
+with open('movies.csv', 'w') as csvfile:
+	file_w = csv.writer(csvfile)
+	for type_ in types:
+		for region in regions:
+			movies = getMovies(type_, region)
+			for movie in movies:
+				row = [movie.name, movie.rate, movie.location, movie.category, movie.info_link, movie.cover_link]
+				file_w.writerow(row)
+
+
+
+
+
 
 
 # 任务6:统计电影数据
