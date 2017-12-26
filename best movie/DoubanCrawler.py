@@ -8,6 +8,7 @@ return a string corresponding to the URL of douban movie lists given category an
 import urllib.parse
 import requests
 import expanddouban
+from bs4 import BeautifulSoup
 
 def getMovieUrl(category, location):
 	relative_url = '#/?sort=S&range=9,10&tags=电影,' + category + ',' + location
@@ -16,7 +17,8 @@ def getMovieUrl(category, location):
 
 # 任务2:获取电影页面html
 def get_html(url):
-	html = expanddouban.getHtml(url, True)
+	html = expanddouban.getHtml(url, True, 3)
+	return html
 
 
 
@@ -32,11 +34,30 @@ class Movie(object):
 		self.category = category
 		self.info_link = info_link
 		self.cover_link = cover_link
-		
+
 
 
 
 # 任务4:获得豆瓣电影的信息
+"""
+return a list of Movie objects with the given category and location.
+"""
+def getMovies(category, location):
+	movies = []
+	url = getMovieUrl(category, location)
+	html = get_html(url)
+	soup = BeautifulSoup(html, 'html.parser')
+	for item in soup.find(class_ = "list-wp").find_all('a'):
+		movie = Movie()
+		movie.name = item.find(class_ = 'title').get_text()
+		movie.rate = item.find(class_ = 'rate').get_text()
+		movie.info_link = item.get('href')
+		movie.cover_link = item.find('img').get('src')
+		movies.append(movie)
+	return movies
+
+# 调试语句
+# movies = getMovies('喜剧', '美国')
 
 
 # 任务5:构造电影信息数据表
