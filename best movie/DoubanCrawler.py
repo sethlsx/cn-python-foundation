@@ -84,5 +84,59 @@ with open('movies.csv', 'w') as csvfile:
 
 
 
+
+
 # 任务6:统计电影数据
+with open('movies.csv') as f:
+	f_csv = csv.reader(f)
+	category = ''
+	count = {}
+	location = {}
+	for row in f_csv:
+		if row[3] != category:
+			if location:
+				count[category] = location
+			category = row[3]
+			location= {}
+		else:
+			if row[2] in location:
+				location[row[2]] += 1
+			else:
+				location[row[2]] = 1
+	count[category] = location
+	
+	x = open('output.txt', 'w')				#增加此行使得多次运行时output.txt文件重置
+	x.close()
+	
+	for type_ in count:
+		with open('output.txt', 'a') as output:
+			print('在我选择的{}类别中，数量排名前三的地区及其分别占该类别总数的百分比为：\n'.format(type_), file = output)
+			first, second, third = '', '', ''
+			first_num, second_num, third_num = 0, 0, 0
+			sumnum = 0
+			for region in count[type_]:
+				sumnum += count[type_][region]
+				if count[type_][region] > first_num:
+					third = second
+					third_num = second_num
+					second = first
+					second_num = first_num
+					first = region
+					first_num = count[type_][region]
+				elif count[type_][region] < first_num and count[type_][region] > second_num:
+					third = second
+					third_num = second_num
+					second = region
+					second_num = count[type_][region]
+				elif count[type_][region] < second_num and count[type_][region] > third_num:
+					third = region
+					third_num = count[type_][region]
+				else:
+					pass
+			print(first + ' %.2f%%\n'%(first_num/sumnum*100), file = output)
+			print(second + ' %.2f%%\n'%(second_num/sumnum*100), file = output)
+			print(third + ' %.2f%%\n'%(third_num/sumnum*100), file = output)	
+
+
+
 
